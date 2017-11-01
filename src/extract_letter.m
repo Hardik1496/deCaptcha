@@ -1,7 +1,7 @@
 function result = extract_letter(img)
     j = 1;
     count = 0;
-    result = zeros(40,40,5);
+    result = zeros(40,40,6);
     while(j <= size(img,2))
         jump = 0;
         for i = 1:size(img,1)

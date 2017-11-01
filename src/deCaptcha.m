@@ -1,7 +1,7 @@
 function out = deCaptcha(img,deepnet)
     letters = extract_letter(preprocess(img)) * 255;
     out = '';
-    for i = 1:5
+    for i = 1:6
         test = letters(:,:,i);
         [a,b] = max(deepnet(test(:)));
         if b < 10
