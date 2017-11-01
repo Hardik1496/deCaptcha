@@ -1,6 +1,6 @@
 function deepnet = train_captcha(Train_images, Train_code)
     rng('default');
-    hiddenSize1 = 452;
+    hiddenSize1 = 100;
 
     autoenc1 = trainAutoencoder(Train_images,hiddenSize1, ...
         'MaxEpochs',400, ...
@@ -10,7 +10,7 @@ function deepnet = train_captcha(Train_images, Train_code)
         'ScaleData', false);
     feat1 = encode(autoenc1,Train_images);
     
-    hiddenSize2 = 128;
+    hiddenSize2 = 50;
     autoenc2 = trainAutoencoder(feat1,hiddenSize2, ...
         'MaxEpochs',100, ...
         'L2WeightRegularization',0.002, ...
@@ -22,7 +22,8 @@ function deepnet = train_captcha(Train_images, Train_code)
     softnet = trainSoftmaxLayer(feat2,Train_code,'MaxEpochs',400);
     deepnet = stack(autoenc1,autoenc2,softnet);
     
-    xTrain = zeros(1600,numel(Train_images));
+    inputsize = size(Train_images{1},1)*size(Train_images{1},2);
+    xTrain = zeros(inputsize,numel(Train_images));
     for i = 1:numel(Train_images)
         xTrain(:,i) = Train_images{i}(:);
     end
